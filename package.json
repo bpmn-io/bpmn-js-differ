@@ -1,0 +1,41 @@
+{
+  "name": "bpmn-js-differ",
+  "version": "0.0.0",
+  "description": "A diffing utility for bpmn-js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bpmn-io/bpmn-js-differ"
+  },
+  "keywords": [
+    "bpmnjs",
+    "diff"
+  ],
+  "author": {
+    "name": "Nico Rehwaldt",
+    "url": "https://github.com/Nikku"
+  },
+  "contributors": [
+    {
+      "name": "bpmn.io contributors",
+      "url": "https://github.com/bpmn-io"
+    }
+  ],
+  "license": "MIT",
+  "browser": {
+    "fs": false
+  },
+  "devDependencies": {
+    "bpmn-moddle": "^0.3.0",
+    "chai": "^1.9.1",
+    "grunt": "~0.4.4",
+    "grunt-contrib-watch": "~0.5.0",
+    "grunt-contrib-jshint": "~0.7.2",
+    "grunt-jsdoc": "^0.5.6",
+    "grunt-mocha-test": "^0.11.0",
+    "load-grunt-tasks": "~0.3.0"
+  },
+  "dependencies": {
+    "jsondiffpatch": "^0.1.8",
+    "lodash": "^2.4.0"
+  }
+}

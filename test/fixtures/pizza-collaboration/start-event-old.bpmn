@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<semantic:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:semantic="http://www.omg.org/spec/BPMN/20100524/MODEL" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd" id="_1275940932088" exporter="camunda modeler" exporterVersion="2.5.0" targetNamespace="http://www.trisotech.com/definitions/_1275940932088">
+  <semantic:process id="_6-2" isExecutable="false">
+    <semantic:startEvent id="_6-61" name="Hungry for pizza"/>
+  </semantic:process>
+  <semantic:collaboration id="C1275940932557">
+    <semantic:participant id="_6-53" name="Pizza Customer" processRef="_6-2"/>
+  </semantic:collaboration>
+  <bpmndi:BPMNDiagram documentation="" id="Trisotech.Visio-_6" name="Untitled Diagram" resolution="96.0">
+    <bpmndi:BPMNPlane bpmnElement="C1275940932557">
+      <bpmndi:BPMNShape id="Trisotech.Visio__6-53" bpmnElement="_6-53" isHorizontal="true">
+        <dc:Bounds height="294.0" width="1044.0" x="12.0" y="12.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Trisotech.Visio__6__6-61" bpmnElement="_6-61">
+        <dc:Bounds height="30.0" width="30.0" x="66.0" y="96.0"/>
+        <bpmndi:BPMNLabel/>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</semantic:definitions>

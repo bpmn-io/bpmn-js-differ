@@ -1,0 +1,20 @@
+{
+  "noarg" : true,
+  "noempty" : false,
+  "quotmark" : true,
+  "undef" : true,
+  "trailing" : true,
+  "maxlen" : 120,
+  "browser" : true,
+  "node" : true,
+  "debug": true,
+  "strict": false,
+  "globals": {
+    "describe": false,
+    "it": false,
+    "expect": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "alert": true
+  }
+}
