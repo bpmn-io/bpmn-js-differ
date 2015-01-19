@@ -1,6 +1,8 @@
 # bpmn-js-differ
 
-A diffing utility for BPMN 2.0 documents to be used with [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle).
+[![Build Status](https://travis-ci.org/bpmn-io/bpmn-js-differ.svg)](https://travis-ci.org/bpmn-io/bpmn-js-differ)
+
+A diffing utility for BPMN 2.0 documents. To be used together with [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle).
 
 
 ## Usage
