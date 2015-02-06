@@ -37,6 +37,6 @@
   },
   "dependencies": {
     "jsondiffpatch": "^0.1.26",
-    "lodash": "^2.4.0"
+    "lodash": "^3.0.0"
   }
 }
