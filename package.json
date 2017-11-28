@@ -3,7 +3,10 @@
   "version": "0.2.0",
   "description": "A diffing utility for bpmn-js",
   "scripts": {
-    "test": "grunt test"
+    "all": "run-s lint test",
+    "lint": "eslint .",
+    "dev": "npm run test -- --watch",
+    "test": "mocha test/spec/*.js"
   },
   "repository": {
     "type": "git",
@@ -28,15 +31,11 @@
     "fs": false
   },
   "devDependencies": {
-    "chai": "^1.9.1",
-    "grunt": "~0.4.4",
-    "grunt-cli": "^1.2.0",
-    "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-watch": "~0.5.0",
-    "grunt-jsdoc": "^0.5.6",
-    "grunt-mocha-test": "^0.11.0",
-    "grunt-release": "^0.7.0",
-    "load-grunt-tasks": "~0.3.0"
+    "chai": "^4.1.2",
+    "eslint": "^4.12.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "mocha": "^4.0.1",
+    "npm-run-all": "^4.1.2"
   },
   "dependencies": {
     "bpmn-moddle": "^1.1.1",

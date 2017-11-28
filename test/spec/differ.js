@@ -1,5 +1,7 @@
 'use strict';
 
+var expect = require('chai').expect;
+
 var fs = require('fs');
 
 
@@ -119,7 +121,7 @@ describe('diffing', function() {
         expect(results._changed).to.have.keys([ 'Task_1'  ]);
 
         expect(results._changed['Task_1'].attrs).to.deep.eql({
-          name: { oldValue: undefined, newValue: 'TASK'}
+          name: { oldValue: undefined, newValue: 'TASK' }
         });
 
         done();
