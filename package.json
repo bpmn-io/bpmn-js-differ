@@ -2,6 +2,9 @@
   "name": "bpmn-js-differ",
   "version": "0.2.0",
   "description": "A diffing utility for bpmn-js",
+  "scripts": {
+    "test": "grunt test"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/bpmn-io/bpmn-js-differ"
@@ -27,6 +30,7 @@
   "devDependencies": {
     "chai": "^1.9.1",
     "grunt": "~0.4.4",
+    "grunt-cli": "^1.2.0",
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-watch": "~0.5.0",
     "grunt-jsdoc": "^0.5.6",
