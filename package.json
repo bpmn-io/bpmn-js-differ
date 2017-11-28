@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "bpmn-moddle": "^1.1.1",
-    "jsondiffpatch": "^0.1.26",
+    "jsondiffpatch": "^0.2.5",
     "lodash": "^3.0.0"
   }
 }
