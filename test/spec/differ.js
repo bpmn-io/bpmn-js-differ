@@ -241,6 +241,30 @@ describe('diffing', function() {
     });
 
 
+    it('should diff extension elements', function(done) {
+
+      var aDiagram = fs.readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
+      var bDiagram = fs.readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
+
+
+      // when
+      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'usertask' ]);
+
+        done();
+      });
+    });
+
+
     it('should diff pizza collaboration StartEvent move', function(done) {
 
       var aDiagram = fs.readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
