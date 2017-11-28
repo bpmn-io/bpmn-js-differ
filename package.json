@@ -25,7 +25,6 @@
     "fs": false
   },
   "devDependencies": {
-    "bpmn-moddle": "^0.3.0",
     "chai": "^1.9.1",
     "grunt": "~0.4.4",
     "grunt-contrib-jshint": "~0.7.2",
@@ -36,6 +35,7 @@
     "load-grunt-tasks": "~0.3.0"
   },
   "dependencies": {
+    "bpmn-moddle": "^1.1.1",
     "jsondiffpatch": "^0.1.26",
     "lodash": "^3.0.0"
   }
