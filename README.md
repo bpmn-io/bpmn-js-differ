@@ -16,14 +16,14 @@ npm install --save bpmn-js-differ
 Use the differ to compare two BPMN 2.0 documents:
 
 ```javascript
-var Differ = require('bpmn-js-differ');
+import { diff } from 'bpmn-js-differ';
 
 var oldDefinitions, newDefinitions; // read with bpmn-moddle
 
-var changes = Differ.diff(oldDefinitions, newDefinitions);
+var changes = diff(oldDefinitions, newDefinitions);
 ```
 
-The differ returns an object with the `_changed`, `_added`, `_remove`, `_layoutChanged` keys containing all differences between the models.
+The diff returns an object with the `_changed`, `_added`, `_remove`, `_layoutChanged` keys containing all differences between the models.
 
 ```javascript
 console.log(changes._changed);
@@ -61,7 +61,7 @@ npm install --save bpmn-moddle
 Load two diagrams:
 
 ```javascript
-var BpmnModdle = require('bpmn-moddle');
+import BpmnModdle from 'bpmn-moddle';
 
 function loadModels(a, b) {
 
