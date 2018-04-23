@@ -6,6 +6,10 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.1.0
+
+* `FEAT`: provide pre-built CommonJS and ES module distributions
+
 ## 1.0.0
 
 ### Breaking Changes
