@@ -322,5 +322,46 @@ describe('diffing', function() {
       });
     });
 
+
+    it('should diff data-objects', function(done) {
+
+      var aDiagram = fs.readFileSync('test/fixtures/data-objects/before.bpmn', 'utf-8');
+      var bDiagram = fs.readFileSync('test/fixtures/data-objects/after.bpmn', 'utf-8');
+
+
+      // when
+      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.have.keys([
+          'DataObjectReference_E',
+          'DataOutputAssociation_2',
+          'DataOutputAssociation_3',
+          'DataStoreReference_D'
+        ]);
+
+        expect(results._removed).to.have.keys([
+          'DataInputAssociation_4',
+          'DataOutputAssociation_5',
+          'DataStoreReference_C'
+        ]);
+
+        expect(results._layoutChanged).to.have.keys([
+          // waypoints changed
+          'DataInputAssociation_1'
+        ]);
+
+        // TODO(nikku): detect bpmn:DataObjectReference#dataObject change
+        expect(results._changed).to.be.empty;
+
+        done();
+      });
+    });
+
   });
+
 });
