@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="false">
+    <bpmn:subProcess id="SubProcess_1" name="1" />
+    <bpmn:subProcess id="SubProcess_2" name="2">
+      <bpmn:task id="Task_F" name="F" />
+    </bpmn:subProcess>
+    <bpmn:subProcess id="SubProcess_4" name="4">
+      <bpmn:task id="Task_E" name="E" />
+    </bpmn:subProcess>
+    <bpmn:subProcess id="SubProcess_5" name="5">
+      <bpmn:task id="Task_G" />
+    </bpmn:subProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="SubProcess_1_di" bpmnElement="SubProcess_1" isExpanded="false">
+        <dc:Bounds x="222.25" y="187.5" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_2_di" bpmnElement="SubProcess_2" isExpanded="true">
+        <dc:Bounds x="243" y="404" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_4_di" bpmnElement="SubProcess_4" isExpanded="true">
+        <dc:Bounds x="637" y="404" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_E_di" bpmnElement="Task_E">
+        <dc:Bounds x="687" y="440" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_F_di" bpmnElement="Task_F">
+        <dc:Bounds x="412" y="472" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="SubProcess_5_di" bpmnElement="SubProcess_5" isExpanded="false">
+        <dc:Bounds x="243" y="639" width="350" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Task_G_di" bpmnElement="Task_G">
+        <dc:Bounds x="283" y="697" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

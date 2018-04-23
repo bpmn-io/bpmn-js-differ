@@ -362,6 +362,45 @@ describe('diffing', function() {
       });
     });
 
+
+    it('should diff sub-processes', function(done) {
+
+      var aDiagram = fs.readFileSync('test/fixtures/sub-processes/before.bpmn', 'utf-8');
+      var bDiagram = fs.readFileSync('test/fixtures/sub-processes/after.bpmn', 'utf-8');
+
+
+      // when
+      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.have.keys([
+          'Task_F',
+          'SubProcess_4'
+        ]);
+
+        expect(results._removed).to.have.keys([
+          'Task_B',
+          'SubProcess_3'
+        ]);
+
+        expect(results._layoutChanged).to.have.keys([
+          // sub-process collapsed state changed
+          'SubProcess_5'
+        ]);
+
+        expect(results._changed).to.have.keys([
+          // Task removed
+          'SubProcess_1'
+        ]);
+
+        done();
+      });
+    });
+
   });
 
 });
