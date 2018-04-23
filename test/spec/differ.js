@@ -1,52 +1,19 @@
-'use strict';
+import {
+  expect
+} from 'chai';
 
-var expect = require('chai').expect;
+import {
+  readFileSync
+} from 'fs';
 
-var fs = require('fs');
+import BpmnModdle from 'bpmn-moddle';
 
+import {
+  Differ,
+  diff
+} from '../../';
 
-var BpmnModdle = require('bpmn-moddle');
-
-var Differ = require('../../lib/differ'),
-    SimpleChangeHandler = require('../../lib/change-handler');
-
-
-function importDiagrams(a, b, done) {
-
-  new BpmnModdle().fromXML(a, function(err, adefs) {
-
-    if (err) {
-      return done(err);
-    }
-
-    new BpmnModdle().fromXML(b, function(err, bdefs) {
-      if (err) {
-        return done(err);
-      } else {
-        return done(null, adefs, bdefs);
-      }
-    });
-  });
-}
-
-
-function diff(a, b, done) {
-
-  importDiagrams(a, b, function(err, adefs, bdefs) {
-    if (err) {
-      return done(err);
-    }
-
-    // given
-    var handler = new SimpleChangeHandler();
-
-    // when
-    new Differ().diff(adefs, bdefs, handler);
-
-    done(err, handler, adefs, bdefs);
-  });
-
-}
+import SimpleChangeHandler from '../../lib/change-handler';
 
 
 describe('diffing', function() {
@@ -55,11 +22,11 @@ describe('diffing', function() {
 
     it('should discover add', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/add/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/add/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/add/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/add/after.bpmn', 'utf-8');
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -80,11 +47,11 @@ describe('diffing', function() {
 
     it('should discover remove', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/remove/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/remove/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/remove/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/remove/after.bpmn', 'utf-8');
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -104,11 +71,11 @@ describe('diffing', function() {
 
     it('should discover change', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -118,7 +85,7 @@ describe('diffing', function() {
         expect(results._added).to.eql({});
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.eql({});
-        expect(results._changed).to.have.keys([ 'Task_1'  ]);
+        expect(results._changed).to.have.keys([ 'Task_1' ]);
 
         expect(results._changed['Task_1'].attrs).to.deep.eql({
           name: { oldValue: undefined, newValue: 'TASK' }
@@ -132,11 +99,11 @@ describe('diffing', function() {
 
     it('should discover layout-change', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -160,8 +127,8 @@ describe('diffing', function() {
 
     it('should diff with default handler', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
       importDiagrams(aDiagram, bDiagram, function(err, aDefinitions, bDefinitions) {
@@ -187,8 +154,8 @@ describe('diffing', function() {
 
     it('should diff via static diff', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
       importDiagrams(aDiagram, bDiagram, function(err, aDefinitions, bDefinitions) {
@@ -198,7 +165,7 @@ describe('diffing', function() {
         }
 
         // when
-        var results = Differ.diff(aDefinitions, bDefinitions);
+        var results = diff(aDefinitions, bDefinitions);
 
         // then
         expect(results._added).to.eql({});
@@ -219,12 +186,12 @@ describe('diffing', function() {
 
     it('should diff collaboration pools / lanes', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/collaboration/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/collaboration/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/collaboration/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/collaboration/after.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -243,12 +210,12 @@ describe('diffing', function() {
 
     it('should diff extension elements', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -267,12 +234,12 @@ describe('diffing', function() {
 
     it('should diff pizza collaboration StartEvent move', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/pizza-collaboration/start-event-new.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-new.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -291,12 +258,12 @@ describe('diffing', function() {
 
     it('should diff pizza collaboration', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/pizza-collaboration/old.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/pizza-collaboration/new.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/pizza-collaboration/old.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/pizza-collaboration/new.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -325,12 +292,12 @@ describe('diffing', function() {
 
     it('should diff data-objects', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/data-objects/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/data-objects/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/data-objects/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/data-objects/after.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -365,12 +332,12 @@ describe('diffing', function() {
 
     it('should diff sub-processes', function(done) {
 
-      var aDiagram = fs.readFileSync('test/fixtures/sub-processes/before.bpmn', 'utf-8');
-      var bDiagram = fs.readFileSync('test/fixtures/sub-processes/after.bpmn', 'utf-8');
+      var aDiagram = readFileSync('test/fixtures/sub-processes/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/sub-processes/after.bpmn', 'utf-8');
 
 
       // when
-      diff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
 
         if (err) {
           return done(err);
@@ -404,3 +371,43 @@ describe('diffing', function() {
   });
 
 });
+
+
+// helpers //////////////////
+
+function importDiagrams(a, b, done) {
+
+  new BpmnModdle().fromXML(a, function(err, adefs) {
+
+    if (err) {
+      return done(err);
+    }
+
+    new BpmnModdle().fromXML(b, function(err, bdefs) {
+      if (err) {
+        return done(err);
+      } else {
+        return done(null, adefs, bdefs);
+      }
+    });
+  });
+}
+
+
+function testDiff(a, b, done) {
+
+  importDiagrams(a, b, function(err, adefs, bdefs) {
+    if (err) {
+      return done(err);
+    }
+
+    // given
+    var handler = new SimpleChangeHandler();
+
+    // when
+    new Differ().diff(adefs, bdefs, handler);
+
+    done(err, handler, adefs, bdefs);
+  });
+
+}

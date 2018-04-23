@@ -6,7 +6,7 @@
     "all": "run-s lint test",
     "lint": "eslint .",
     "dev": "npm run test -- --watch",
-    "test": "mocha test/spec/*.js"
+    "test": "mocha -r esm test/spec/*.js"
   },
   "repository": {
     "type": "git",
@@ -27,19 +27,17 @@
     }
   ],
   "license": "MIT",
-  "browser": {
-    "fs": false
-  },
   "devDependencies": {
     "chai": "^4.1.2",
     "eslint": "^4.12.0",
-    "eslint-plugin-bpmn-io": "^0.1.0",
+    "eslint-plugin-bpmn-io": "^0.5.2",
+    "esm": "^3.0.24",
     "mocha": "^4.0.1",
     "npm-run-all": "^4.1.2"
   },
   "dependencies": {
     "bpmn-moddle": "^1.1.1",
     "jsondiffpatch": "^0.3.9",
-    "lodash": "^3.0.0"
+    "min-dash": "^3.0.0"
   }
 }
