@@ -1,3 +1,6 @@
+> As of version `1.0.0` this library exposes ES modules. Use [esm](https://github.com/standard-things/esm) to consume it or a ES module aware transpiler such as Webpack, Rollup or Browserify + babelify to bundle it for the browser.
+
+
 # bpmn-js-differ
 
 [![Build Status](https://travis-ci.org/bpmn-io/bpmn-js-differ.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js-differ)
