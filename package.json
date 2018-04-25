@@ -44,7 +44,7 @@
     "rollup-plugin-uglify": "^3.0.0"
   },
   "dependencies": {
-    "jsondiffpatch": "^0.3.9",
+    "diffpatch": "^0.5.1",
     "min-dash": "^3.0.0"
   }
 }

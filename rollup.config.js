@@ -48,12 +48,6 @@ function pgl(plugins = []) {
         `,
         'diff-match-patch': `
           export default null;
-        `,
-        'jsondiffpatch/formatters/index': `
-          export default {};
-        `,
-        'jsondiffpatch/formatters/console': `
-          export default null;
         `
       }
     }),
