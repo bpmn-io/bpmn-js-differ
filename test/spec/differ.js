@@ -368,6 +368,35 @@ describe('diffing', function() {
       });
     });
 
+
+    it('should diff signavio-collapsed', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/signavio-collapsed/before.collapsed.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/signavio-collapsed/after.expanded.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+
+        expect(results._removed).to.be.empty;
+
+        expect(results._layoutChanged).to.have.keys([
+          // sub-process collapsed state changed
+          'SubProcess_1'
+        ]);
+
+        expect(results._changed).to.be.empty;
+
+        done();
+      });
+    });
   });
 
 });
