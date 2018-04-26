@@ -6,6 +6,10 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+## 1.2.0
+
+* `FEAT`: migrate from `jsondiffpatch` to `diffpatch` for improved bundle sizes
+
 ## 1.1.0
 
 * `FEAT`: provide pre-built CommonJS and ES module distributions
