@@ -397,6 +397,36 @@ describe('diffing', function() {
         done();
       });
     });
+
+    it('should throw an error when trying to diff two complete different processes', function(done) {
+      const diagramA = readFileSync('test/fixtures/different-processes/process1.bpmn', 'utf-8');
+      const diagramB = readFileSync('test/fixtures/different-processes/process2.bpmn', 'utf-8');
+
+      const expectedErrorMessage = 'The two diagrams are incomparable';
+
+      const diffFunction = function(err, diagA, diagB) {
+        if (err) {
+          return done(err);
+        }
+
+        const handler = new SimpleChangeHandler();
+
+        /*
+         * Diff the given diagrams and expect the Diff function to throw the
+         * expected Error
+        */
+        const expectedErrorMessage = /.*?two.*?diagrams.*?are.*?incomparable/i;
+        const differ = new Differ();
+
+        expect(function() {
+          differ.diff(diagA, diagB, handler);
+        }).to.throw(Error, expectedErrorMessage);
+
+        done();
+      };
+
+      importDiagrams(diagramA, diagramB, diffFunction);
+    });
   });
 
 });
