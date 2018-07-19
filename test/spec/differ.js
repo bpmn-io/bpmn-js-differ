@@ -398,7 +398,7 @@ describe('diffing', function() {
       });
     });
 
-    it.only('should throw an error when trying to diff two complete different processes', function(done) {
+    it('should throw an error when trying to diff two complete different processes', function(done) {
       const diagramA = readFileSync('test/fixtures/different-processes/process1.bpmn', 'utf-8');
       const diagramB = readFileSync('test/fixtures/different-processes/process2.bpmn', 'utf-8');
 
