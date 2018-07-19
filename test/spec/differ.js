@@ -199,13 +199,41 @@ describe('diffing', function() {
 
         // then
         expect(results._added).to.have.keys([ 'Participant_2' ]);
-        expect(results._removed).to.have.keys([ 'Participant_1', 'Lane_1' ]);
+        expect(results._removed).to.have.keys([ 'Participant_1', 'Lane_1', 'Task_1' ]);
         expect(results._layoutChanged).to.have.keys([ '_Participant_2', 'Lane_2' ]);
         expect(results._changed).to.have.keys([ 'Lane_2' ]);
 
         done();
       });
     });
+
+
+    it('collaboration message flow', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/collaboration/message-flow-before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/collaboration/message-flow-after.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.have.keys([
+          'Participant_1w6hx42',
+          'MessageFlow_1ofxm38'
+        ]);
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.be.empty;
+
+        done();
+      });
+    });
+
 
 
     it('extension elements', function(done) {
@@ -350,6 +378,7 @@ describe('diffing', function() {
         ]);
 
         expect(results._removed).to.have.keys([
+          'Task_A',
           'Task_B',
           'SubProcess_3'
         ]);
@@ -359,10 +388,7 @@ describe('diffing', function() {
           'SubProcess_5'
         ]);
 
-        expect(results._changed).to.have.keys([
-          // Task removed
-          'SubProcess_1'
-        ]);
+        expect(results._changed).to.be.empty;
 
         done();
       });
