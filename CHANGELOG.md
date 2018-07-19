@@ -6,6 +6,15 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+### Breaking Changes
+
+* `FEAT`: track `bpmn:Collaboration` changes
+
+### Other Changes
+
+* `FEAT`: detect collection addition
+* `FEAT`: mark parent as changed on nested, un-tracked changes
+
 ## 1.2.0
 
 * `FEAT`: migrate from `jsondiffpatch` to `diffpatch` for improved bundle sizes
