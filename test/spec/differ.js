@@ -181,10 +181,10 @@ describe('diffing', function() {
   });
 
 
-  describe('scenarios', function() {
+  describe('should diff scenario', function() {
 
 
-    it('should diff collaboration pools / lanes', function(done) {
+    it('collaboration pools / lanes', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/collaboration/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/collaboration/after.bpmn', 'utf-8');
@@ -208,7 +208,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff extension elements', function(done) {
+    it('extension elements', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
@@ -232,7 +232,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff pizza collaboration StartEvent move', function(done) {
+    it('pizza collaboration StartEvent move', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-new.bpmn', 'utf-8');
@@ -256,7 +256,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff pizza collaboration', function(done) {
+    it('pizza collaboration', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/pizza-collaboration/old.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/pizza-collaboration/new.bpmn', 'utf-8');
@@ -290,7 +290,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff data-objects', function(done) {
+    it('data-objects', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/data-objects/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/data-objects/after.bpmn', 'utf-8');
@@ -330,7 +330,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff sub-processes', function(done) {
+    it('sub-processes', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/sub-processes/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/sub-processes/after.bpmn', 'utf-8');
@@ -369,7 +369,7 @@ describe('diffing', function() {
     });
 
 
-    it('should diff signavio-collapsed', function(done) {
+    it('signavio-collapsed', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/signavio-collapsed/before.collapsed.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/signavio-collapsed/after.expanded.bpmn', 'utf-8');
@@ -398,35 +398,36 @@ describe('diffing', function() {
       });
     });
 
-    it('should throw an error when trying to diff two complete different processes', function(done) {
-      const diagramA = readFileSync('test/fixtures/different-processes/process1.bpmn', 'utf-8');
-      const diagramB = readFileSync('test/fixtures/different-processes/process2.bpmn', 'utf-8');
 
-      const expectedErrorMessage = 'The two diagrams are incomparable';
+    it('different collaborations', function(done) {
 
-      const diffFunction = function(err, diagA, diagB) {
+      const aDiagram = readFileSync('test/fixtures/different-collaboration/before.bpmn', 'utf-8');
+      const bDiagram = readFileSync('test/fixtures/different-collaboration/after.bpmn', 'utf-8');
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
         if (err) {
           return done(err);
         }
 
-        const handler = new SimpleChangeHandler();
+        // then
+        expect(results._added).to.have.keys([
+          'Collaboration_108r8n7'
+        ]);
 
-        /*
-         * Diff the given diagrams and expect the Diff function to throw the
-         * expected Error
-        */
-        const expectedErrorMessage = /.*?two.*?diagrams.*?are.*?incomparable/i;
-        const differ = new Differ();
+        expect(results._removed).to.have.keys([
+          'Collaboration_1cidyxu'
+        ]);
 
-        expect(function() {
-          differ.diff(diagA, diagB, handler);
-        }).to.throw(Error, expectedErrorMessage);
+        expect(results._layoutChanged).to.be.empty;
+
+        expect(results._changed).to.be.empty;
 
         done();
-      };
-
-      importDiagrams(diagramA, diagramB, diffFunction);
+      });
     });
+
   });
 
 });
