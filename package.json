@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js-differ",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A diffing utility for bpmn-js",
   "scripts": {
     "all": "run-s lint test",
