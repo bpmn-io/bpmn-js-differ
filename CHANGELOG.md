@@ -6,6 +6,10 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+## 2.0.2
+
+* `FIX`: swap new/old value in collection properties
+
 ## 2.0.0
 
 * `FEAT`: track `bpmn:Collaboration` changes
