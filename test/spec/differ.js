@@ -227,6 +227,10 @@ describe('diffing', function() {
         expect(results._layoutChanged).to.be.empty;
         expect(results._changed).to.have.keys([ 'Participant_03hz6qm' ]);
 
+        var changed = results._changed['Participant_03hz6qm'];
+
+        expect(changed.attrs).to.have.keys([ 'processRef.laneSets[0]' ]);
+
         done();
       });
     });
@@ -433,6 +437,12 @@ describe('diffing', function() {
 
         expect(results._changed).to.have.keys([
           'IntermediateThrowEvent_0mn39ym'
+        ]);
+
+        var changed = results._changed['IntermediateThrowEvent_0mn39ym'];
+
+        expect(changed.attrs).to.have.keys([
+          'eventDefinitions[0]'
         ]);
 
         done();
