@@ -231,6 +231,11 @@ describe('diffing', function() {
 
         expect(changed.attrs).to.have.keys([ 'processRef.laneSets[0]' ]);
 
+        var changedLaneSets = changed.attrs['processRef.laneSets[0]'];
+
+        expect(changedLaneSets.oldValue).not.to.exist;
+        expect(changedLaneSets.newValue).to.exist;
+
         done();
       });
     });
