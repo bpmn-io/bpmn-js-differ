@@ -208,6 +208,54 @@ describe('diffing', function() {
     });
 
 
+    it('lanes create', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/lanes/create-laneset-before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/lanes/create-laneset-after.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Participant_03hz6qm' ]);
+
+        done();
+      });
+    });
+
+
+    it('lanes remove', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/lanes/create-laneset-after.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/lanes/create-laneset-before.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Participant_03hz6qm' ]);
+
+        done();
+      });
+    });
+
+
     it('collaboration message flow', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/collaboration/message-flow-before.bpmn', 'utf-8');
@@ -354,7 +402,9 @@ describe('diffing', function() {
         ]);
 
         // TODO(nikku): detect bpmn:DataObjectReference#dataObject change
-        expect(results._changed).to.be.empty;
+        expect(results._changed).to.have.keys([
+          'Process_1'
+        ]);
 
         done();
       });
@@ -471,11 +521,13 @@ describe('diffing', function() {
 
         // then
         expect(results._added).to.have.keys([
-          'Collaboration_108r8n7'
+          'Collaboration_108r8n7',
+          'Participant_1sdnyht'
         ]);
 
         expect(results._removed).to.have.keys([
-          'Collaboration_1cidyxu'
+          'Collaboration_1cidyxu',
+          'Participant_0px403d'
         ]);
 
         expect(results._layoutChanged).to.be.empty;
