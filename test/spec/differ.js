@@ -311,7 +311,10 @@ describe('diffing', function() {
           '_6-61'
         ]);
 
-        expect(results._changed).to.have.keys([ '_6-127' ]);
+        expect(results._changed).to.have.keys([
+          '_6-127',
+          '_6-219'
+        ]);
 
         done();
       });
@@ -352,6 +355,35 @@ describe('diffing', function() {
 
         // TODO(nikku): detect bpmn:DataObjectReference#dataObject change
         expect(results._changed).to.be.empty;
+
+        done();
+      });
+    });
+
+
+    it('event definition', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/event-definition/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/event-definition/after.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.be.empty;
+
+        expect(results._removed).to.be.empty;
+
+        expect(results._layoutChanged).to.be.empty;
+
+        expect(results._changed).to.have.keys([
+          'IntermediateThrowEvent_0mn39ym'
+        ]);
 
         done();
       });
