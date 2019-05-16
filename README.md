@@ -23,7 +23,7 @@ var oldDefinitions, newDefinitions; // read with bpmn-moddle
 var changes = diff(oldDefinitions, newDefinitions);
 ```
 
-The diff returns an object with the `_changed`, `_added`, `_remove`, `_layoutChanged` keys containing all differences between the models.
+The diff returns an object with the `_changed`, `_added`, `_removed`, `_layoutChanged` keys containing all differences between the models.
 
 ```javascript
 console.log(changes._changed);
