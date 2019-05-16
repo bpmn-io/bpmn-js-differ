@@ -89,6 +89,11 @@ loadModels(aXML, bXML, function(err, aDefinitions, bDefinitions) {
 ```
 
 
+## Visual Diffing
+
+Use [bpmn-js](https://github.com/bpmn-io/bpmn-js) along with [element coloring](https://github.com/bpmn-io/bpmn-js-examples/tree/master/colors) to build your [visual diff tool](https://demo.bpmn.io/diff) on top of this utility.
+
+
 ## License
 
 MIT
