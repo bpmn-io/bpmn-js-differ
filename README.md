@@ -87,7 +87,21 @@ loadModels(aXML, bXML, function(err, aDefinitions, bDefinitions) {
   // go ahead and use the models
 });
 ```
+NB: Diagram loading has changed as of version 7.0.0 of bpmn-moddle. The method `fromXML` now returns a promise and no longer uses the callback structure.
+Thus, you can do the following to load a diagram that can then be supplied to `diff` as one of its argument:
 
+```javascript
+import BpmnModdle from 'bpmn-moddle';
+
+async function loadModel(diagramXML){
+    try {
+        var loadedResult = await new BpmnModdle().fromXML(diagramXML);
+        return loadedResult.rootElement;
+    } catch(err){
+        console.log('something went wrong!');
+    }
+}
+```
 
 ## Visual Diffing
 
