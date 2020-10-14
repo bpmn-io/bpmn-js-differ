@@ -1,6 +1,6 @@
 # bpmn-js-differ
 
-[![Build Status](https://travis-ci.org/bpmn-io/bpmn-js-differ.svg?branch=master)](https://travis-ci.org/bpmn-io/bpmn-js-differ)
+[![Build Status](https://travis-ci.com/bpmn-io/bpmn-js-differ.svg?branch=master)](https://travis-ci.com/bpmn-io/bpmn-js-differ)
 
 A semantic diffing utility for BPMN 2.0 files. To be used together with [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle).
 
