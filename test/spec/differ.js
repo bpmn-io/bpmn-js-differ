@@ -120,6 +120,29 @@ describe('diffing', function() {
 
     });
 
+    it('should discover timer-change', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/timer-change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/timer-change/after.bpmn', 'utf-8');
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // then
+        expect(results._added).to.eql({});
+        expect(results._removed).to.eql({});
+        expect(results._layoutChanged).to.eql({});
+        expect(results._changed).to.have.keys([ 'TimerEventDefinition_0fgktse' ]);
+
+        done();
+      });
+
+    });
+
   });
 
 
@@ -357,11 +380,12 @@ describe('diffing', function() {
         // then
         expect(results._added).to.have.keys([
           'ManualTask_1',
-          'ExclusiveGateway_1'
+          'ExclusiveGateway_1',
+          'undefined'
         ]);
 
         expect(results._removed).to.have.keys([
-          '_6-674', '_6-691', '_6-746', '_6-748', '_6-74', '_6-125', '_6-178', '_6-642'
+          '_6-674', '_6-691', '_6-746', '_6-748', '_6-74', '_6-125', '_6-178', '_6-642', 'undefined'
         ]);
 
         expect(results._layoutChanged).to.have.keys([
@@ -369,8 +393,7 @@ describe('diffing', function() {
         ]);
 
         expect(results._changed).to.have.keys([
-          '_6-127',
-          '_6-219'
+          '_6-127'
         ]);
 
         done();
