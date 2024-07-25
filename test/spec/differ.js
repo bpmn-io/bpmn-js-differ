@@ -317,6 +317,33 @@ describe('diffing', function() {
     });
 
 
+    it('extension elements', function(done) {
+
+      var aDiagram = readFileSync('test/fixtures/extension-elements/c8-before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/extension-elements/c8-after.bpmn', 'utf-8');
+
+
+      // when
+      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
+
+        if (err) {
+          return done(err);
+        }
+
+        // TODO(nikku): ensure we provide enough meta-data to be able to
+        //  visualize the actual change
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'TASK_1' ]);
+
+        done();
+      });
+    });
+
+
     it('pizza collaboration StartEvent move', function(done) {
 
       var aDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
