@@ -38,22 +38,41 @@ describe('diffing', function() {
     });
 
 
-    it('should flow changed', async function() {
+    describe('should discover flow changed', function() {
 
-      var aDiagram = readFileSync('test/fixtures/incoming-outgoing/before.bpmn', 'utf-8');
-      var bDiagram = readFileSync('test/fixtures/incoming-outgoing/after.bpmn', 'utf-8');
+      it('after reconnect', async function() {
 
-      // when
-      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+        var aDiagram = readFileSync('test/fixtures/incoming-outgoing/reconnect.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/incoming-outgoing/reconnect.after.bpmn', 'utf-8');
 
-        // TODO(nikku): re-connecting sequence flow should be a <change>,
-        //  not only a <layout change>
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
-        // then
-        expect(results._added, 'added').to.be.eql({});
-        expect(results._removed, 'removed').to.eql({});
-        expect(results._layoutChanged, 'layout changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
-        expect(results._changed, 'changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+          // then
+          expect(results._added, 'added').to.be.eql({});
+          expect(results._removed, 'removed').to.eql({});
+          expect(results._layoutChanged, 'layout changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+          expect(results._changed, 'changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+        });
+
+      });
+
+
+      it('after task insert', async function() {
+
+        var aDiagram = readFileSync('test/fixtures/incoming-outgoing/add-task.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/incoming-outgoing/add-task.after.bpmn', 'utf-8');
+
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+          // then
+          expect(results._added, 'added').to.have.keys([ 'TASK', 'FLOW_2' ]);
+          expect(results._removed, 'removed').to.eql({});
+          expect(results._layoutChanged, 'layout changed').to.have.keys([ 'FLOW_1' ]);
+          expect(results._changed, 'changed').to.have.keys([ 'FLOW_1' ]);
+        });
+
       });
 
     });
@@ -253,21 +272,42 @@ describe('diffing', function() {
     });
 
 
-    it('extension elements', async function() {
+    describe('extension elements', function() {
 
-      var aDiagram = readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
-      var bDiagram = readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
+      it('c7', async function() {
 
+        var aDiagram = readFileSync('test/fixtures/extension-elements/c7.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/extension-elements/c7.after.bpmn', 'utf-8');
 
-      // when
-      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
-        // then
-        expect(results._added).to.be.empty;
-        expect(results._removed).to.be.empty;
-        expect(results._layoutChanged).to.be.empty;
-        expect(results._changed).to.have.keys([ 'usertask' ]);
+          // then
+          expect(results._added).to.be.empty;
+          expect(results._removed).to.be.empty;
+          expect(results._layoutChanged).to.be.empty;
+          expect(results._changed).to.have.keys([ 'usertask' ]);
+        });
       });
+
+
+      it('signavio', async function() {
+
+        var aDiagram = readFileSync('test/fixtures/extension-elements/signavio.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/extension-elements/signavio.after.bpmn', 'utf-8');
+
+
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+          // then
+          expect(results._added).to.be.empty;
+          expect(results._removed).to.be.empty;
+          expect(results._layoutChanged).to.be.empty;
+          expect(results._changed).to.have.keys([ 'Process_1' ]);
+        });
+      });
+
     });
 
 
