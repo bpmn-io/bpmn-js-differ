@@ -20,66 +20,49 @@ describe('diffing', function() {
 
   describe('diff', function() {
 
-    it('should discover add', function(done) {
+    it('should discover add', async function() {
 
       var aDiagram = readFileSync('test/fixtures/add/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/add/after.bpmn', 'utf-8');
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
-
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([ 'EndEvent_1', 'SequenceFlow_2' ]);
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.eql({});
         expect(results._changed).to.eql({});
-
-        done();
       });
 
     });
 
 
-    it('should discover remove', function(done) {
+    it('should discover remove', async function() {
 
       var aDiagram = readFileSync('test/fixtures/remove/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/remove/after.bpmn', 'utf-8');
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.eql({});
         expect(results._removed).to.have.keys([ 'Task_1', 'SequenceFlow_1' ]);
         expect(results._layoutChanged).to.eql({});
         expect(results._changed).to.eql({});
-
-        done();
       });
 
     });
 
 
-    it('should discover change', function(done) {
+    it('should discover change', async function() {
 
       var aDiagram = readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.eql({});
@@ -90,32 +73,24 @@ describe('diffing', function() {
         expect(results._changed['Task_1'].attrs).to.deep.eql({
           name: { oldValue: undefined, newValue: 'TASK' }
         });
-
-        done();
       });
 
     });
 
 
-    it('should discover layout-change', function(done) {
+    it('should discover layout-change', async function() {
 
       var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.eql({});
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.have.keys([ 'Task_1', 'SequenceFlow_1' ]);
         expect(results._changed).to.eql({});
-
-        done();
       });
 
     });
@@ -125,17 +100,13 @@ describe('diffing', function() {
 
   describe('api', function() {
 
-    it('should diff with default handler', function(done) {
+    it('should diff with default handler', async function() {
 
       var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
-      importDiagrams(aDiagram, bDiagram, function(err, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      importDiagrams(aDiagram, bDiagram, function(aDefinitions, bDefinitions) {
 
         // when
         var results = new Differ().diff(aDefinitions, bDefinitions);
@@ -145,24 +116,18 @@ describe('diffing', function() {
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.have.keys([ 'Task_1', 'SequenceFlow_1' ]);
         expect(results._changed).to.eql({});
-
-        done();
       });
 
     });
 
 
-    it('should diff via static diff', function(done) {
+    it('should diff via static diff', async function() {
 
       var aDiagram = readFileSync('test/fixtures/layout-change/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/layout-change/after.bpmn', 'utf-8');
 
       // when
-      importDiagrams(aDiagram, bDiagram, function(err, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await importDiagrams(aDiagram, bDiagram, function(aDefinitions, bDefinitions) {
 
         // when
         var results = diff(aDefinitions, bDefinitions);
@@ -172,8 +137,6 @@ describe('diffing', function() {
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.have.keys([ 'Task_1', 'SequenceFlow_1' ]);
         expect(results._changed).to.eql({});
-
-        done();
       });
 
     });
@@ -184,42 +147,32 @@ describe('diffing', function() {
   describe('should diff scenario', function() {
 
 
-    it('collaboration pools / lanes', function(done) {
+    it('collaboration pools / lanes', async function() {
 
       var aDiagram = readFileSync('test/fixtures/collaboration/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/collaboration/after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([ 'Participant_2' ]);
         expect(results._removed).to.have.keys([ 'Participant_1', 'Lane_1', 'Task_1' ]);
         expect(results._layoutChanged).to.have.keys([ '_Participant_2', 'Lane_2' ]);
         expect(results._changed).to.have.keys([ 'Lane_2' ]);
-
-        done();
       });
     });
 
 
-    it('lanes create', function(done) {
+    it('lanes create', async function() {
 
       var aDiagram = readFileSync('test/fixtures/lanes/create-laneset-before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/lanes/create-laneset-after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
@@ -235,48 +188,36 @@ describe('diffing', function() {
 
         expect(changedLaneSets.oldValue).not.to.exist;
         expect(changedLaneSets.newValue).to.exist;
-
-        done();
       });
     });
 
 
-    it('lanes remove', function(done) {
+    it('lanes remove', async function() {
 
       var aDiagram = readFileSync('test/fixtures/lanes/create-laneset-after.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/lanes/create-laneset-before.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
         expect(results._removed).to.be.empty;
         expect(results._layoutChanged).to.be.empty;
         expect(results._changed).to.have.keys([ 'Participant_03hz6qm' ]);
-
-        done();
       });
     });
 
 
-    it('collaboration message flow', function(done) {
+    it('collaboration message flow', async function() {
 
       var aDiagram = readFileSync('test/fixtures/collaboration/message-flow-before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/collaboration/message-flow-after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
@@ -286,73 +227,54 @@ describe('diffing', function() {
         ]);
         expect(results._layoutChanged).to.be.empty;
         expect(results._changed).to.be.empty;
-
-        done();
       });
+
     });
 
 
-
-    it('extension elements', function(done) {
+    it('extension elements', async function() {
 
       var aDiagram = readFileSync('test/fixtures/extension-elements/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/extension-elements/after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
         expect(results._removed).to.be.empty;
         expect(results._layoutChanged).to.be.empty;
         expect(results._changed).to.have.keys([ 'usertask' ]);
-
-        done();
       });
     });
 
 
-    it('pizza collaboration StartEvent move', function(done) {
+    it('pizza collaboration StartEvent move', async function() {
 
       var aDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-old.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/pizza-collaboration/start-event-new.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.eql({});
         expect(results._removed).to.eql({});
         expect(results._layoutChanged).to.have.keys([ '_6-61' ]);
         expect(results._changed).to.eql({});
-
-        done();
       });
     });
 
 
-    it('pizza collaboration', function(done) {
+    it('pizza collaboration', async function() {
 
       var aDiagram = readFileSync('test/fixtures/pizza-collaboration/old.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/pizza-collaboration/new.bpmn', 'utf-8');
 
-
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([
@@ -372,24 +294,18 @@ describe('diffing', function() {
           '_6-127',
           '_6-219'
         ]);
-
-        done();
       });
     });
 
 
-    it('data-objects', function(done) {
+    it('data-objects', async function() {
 
       var aDiagram = readFileSync('test/fixtures/data-objects/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/data-objects/after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([
@@ -415,24 +331,18 @@ describe('diffing', function() {
         expect(results._changed).to.have.keys([
           'Process_1'
         ]);
-
-        done();
       });
     });
 
 
-    it('event definition', function(done) {
+    it('event definition', async function() {
 
       var aDiagram = readFileSync('test/fixtures/event-definition/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/event-definition/after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
@@ -450,24 +360,18 @@ describe('diffing', function() {
         expect(changed.attrs).to.have.keys([
           'eventDefinitions[0]'
         ]);
-
-        done();
       });
     });
 
 
-    it('sub-processes', function(done) {
+    it('sub-processes', async function() {
 
       var aDiagram = readFileSync('test/fixtures/sub-processes/before.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/sub-processes/after.bpmn', 'utf-8');
 
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([
@@ -488,24 +392,17 @@ describe('diffing', function() {
         ]);
 
         expect(results._changed).to.be.empty;
-
-        done();
       });
     });
 
 
-    it('signavio-collapsed', function(done) {
+    it('signavio-collapsed', async function() {
 
       var aDiagram = readFileSync('test/fixtures/signavio-collapsed/before.collapsed.bpmn', 'utf-8');
       var bDiagram = readFileSync('test/fixtures/signavio-collapsed/after.expanded.bpmn', 'utf-8');
 
-
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.be.empty;
@@ -519,23 +416,17 @@ describe('diffing', function() {
         ]);
 
         expect(results._changed).to.be.empty;
-
-        done();
       });
     });
 
 
-    it('different collaborations', function(done) {
+    it('different collaborations', async function() {
 
       const aDiagram = readFileSync('test/fixtures/different-collaboration/before.bpmn', 'utf-8');
       const bDiagram = readFileSync('test/fixtures/different-collaboration/after.bpmn', 'utf-8');
 
       // when
-      testDiff(aDiagram, bDiagram, function(err, results, aDefinitions, bDefinitions) {
-
-        if (err) {
-          return done(err);
-        }
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
         // then
         expect(results._added).to.have.keys([
@@ -551,8 +442,6 @@ describe('diffing', function() {
         expect(results._layoutChanged).to.be.empty;
 
         expect(results._changed).to.be.empty;
-
-        done();
       });
     });
 
@@ -563,31 +452,23 @@ describe('diffing', function() {
 
 // helpers //////////////////
 
-function importDiagrams(a, b, done) {
+async function importDiagrams(a, b, done) {
 
-  new BpmnModdle().fromXML(a, function(err, adefs) {
+  const [
+    { rootElement: aDefs },
+    { rootElement: bDefs }
+  ] = await Promise.all([
+    new BpmnModdle().fromXML(a),
+    new BpmnModdle().fromXML(b),
+  ]);
 
-    if (err) {
-      return done(err);
-    }
-
-    new BpmnModdle().fromXML(b, function(err, bdefs) {
-      if (err) {
-        return done(err);
-      } else {
-        return done(null, adefs, bdefs);
-      }
-    });
-  });
+  return done(aDefs, bDefs);
 }
 
 
 function testDiff(a, b, done) {
 
-  importDiagrams(a, b, function(err, adefs, bdefs) {
-    if (err) {
-      return done(err);
-    }
+  return importDiagrams(a, b, function(adefs, bdefs) {
 
     // given
     var handler = new SimpleChangeHandler();
@@ -595,7 +476,7 @@ function testDiff(a, b, done) {
     // when
     new Differ().diff(adefs, bdefs, handler);
 
-    done(err, handler, adefs, bdefs);
+    return done(handler, adefs, bdefs);
   });
 
 }
