@@ -406,6 +406,7 @@ describe('diffing', function() {
         ]);
 
         expect(results._layoutChanged).to.have.keys([
+
           // waypoints changed
           'DataInputAssociation_1'
         ]);
@@ -481,6 +482,7 @@ describe('diffing', function() {
         ]);
 
         expect(results._layoutChanged).to.have.keys([
+
           // sub-process collapsed state changed
           'SubProcess_5'
         ]);
@@ -511,6 +513,7 @@ describe('diffing', function() {
         expect(results._removed).to.be.empty;
 
         expect(results._layoutChanged).to.have.keys([
+
           // sub-process collapsed state changed
           'SubProcess_1'
         ]);
