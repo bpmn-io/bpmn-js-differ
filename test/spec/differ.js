@@ -38,6 +38,27 @@ describe('diffing', function() {
     });
 
 
+    it('should flow changed', async function() {
+
+      var aDiagram = readFileSync('test/fixtures/incoming-outgoing/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/incoming-outgoing/after.bpmn', 'utf-8');
+
+      // when
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+        // TODO(nikku): re-connecting sequence flow should be a <change>,
+        //  not only a <layout change>
+
+        // then
+        expect(results._added, 'added').to.be.eql({});
+        expect(results._removed, 'removed').to.eql({});
+        expect(results._layoutChanged, 'layout changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+        expect(results._changed, 'changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+      });
+
+    });
+
+
     it('should discover remove', async function() {
 
       var aDiagram = readFileSync('test/fixtures/remove/before.bpmn', 'utf-8');
