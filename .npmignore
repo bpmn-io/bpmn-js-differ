@@ -1,5 +1,0 @@
-!dist
-lib
-test
-.travis.yml
-rollup.config.js
