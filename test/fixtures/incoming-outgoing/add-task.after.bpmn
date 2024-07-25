@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0f0ncr7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.25.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.5.0">
+  <bpmn:process id="Process_06564q1" isExecutable="true">
+    <bpmn:startEvent id="START_EVENT">
+      <bpmn:outgoing>FLOW_1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="END_EVENT">
+      <bpmn:incoming>FLOW_2</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="FLOW_1" sourceRef="START_EVENT" targetRef="TASK" />
+    <bpmn:task id="TASK">
+      <bpmn:incoming>FLOW_1</bpmn:incoming>
+      <bpmn:outgoing>FLOW_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="FLOW_2" sourceRef="TASK" targetRef="END_EVENT" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_06564q1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="START_EVENT">
+        <dc:Bounds x="179" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_014ce2u_di" bpmnElement="END_EVENT">
+        <dc:Bounds x="472" y="79" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_06s94wu_di" bpmnElement="TASK">
+        <dc:Bounds x="290" y="57" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0dv4qc0_di" bpmnElement="FLOW_1">
+        <di:waypoint x="215" y="97" />
+        <di:waypoint x="290" y="97" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0txhpr5_di" bpmnElement="FLOW_2">
+        <di:waypoint x="390" y="97" />
+        <di:waypoint x="472" y="97" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
