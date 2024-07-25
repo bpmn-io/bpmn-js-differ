@@ -36,7 +36,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-bpmn-io": "^1.0.1",
     "esm": "^3.0.24",
-    "mocha": "^4.0.1",
+    "mocha": "^8.4.0",
     "npm-run-all": "^4.1.2",
     "rollup": "^0.58.2",
     "rollup-plugin-hypothetical": "^2.1.0",
