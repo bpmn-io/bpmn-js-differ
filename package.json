@@ -44,7 +44,7 @@
   },
   "dependencies": {
     "diffpatch": "^0.5.1",
-    "min-dash": "^3.0.0"
+    "min-dash": "^4.2.1"
   },
   "files": [
     "dist"
