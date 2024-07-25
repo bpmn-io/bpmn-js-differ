@@ -5,6 +5,7 @@ import uglify from 'rollup-plugin-uglify';
 import pkg from './package.json';
 
 export default [
+
   // browser-friendly UMD build
   {
     input: 'lib/index.js',
