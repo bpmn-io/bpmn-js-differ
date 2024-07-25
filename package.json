@@ -40,8 +40,7 @@
     "npm-run-all": "^4.1.2",
     "rollup": "^0.58.2",
     "rollup-plugin-hypothetical": "^2.1.0",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-uglify": "^3.0.0"
+    "rollup-plugin-node-resolve": "^3.3.0"
   },
   "dependencies": {
     "diffpatch": "^0.5.1",
