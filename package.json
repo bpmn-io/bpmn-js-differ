@@ -6,8 +6,7 @@
     "all": "run-s lint test",
     "lint": "eslint .",
     "pretest": "rollup -c --bundleConfigAsCjs",
-    "test": "mocha test/spec/*.js",
-    "prepublishOnly": "rollup -c --bundleConfigAsCjs"
+    "test": "mocha test/spec/*.js"
   },
   "exports": {
     "./package.json": "./package.json",
