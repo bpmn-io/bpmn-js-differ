@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:signavio="http://www.signavio.com" id="sid-6777dea6-ec27-4c66-85f2-a0f51ecdc8f3" targetNamespace="http://www.signavio.com" expressionLanguage="http://www.w3.org/TR/XPath" exporter="Camunda Modeler" exporterVersion="5.25.0" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL http://www.omg.org/spec/BPMN/2.0/20100501/BPMN20.xsd">
+  <process id="Process_1" processType="None" isClosed="false" isExecutable="false">
+    <extensionElements>
+      <signavio:signavioDiagramMetaData metaKey="processowner" metaValue="" />
+      <signavio:signavioDiagramMetaData metaKey="aktualisierungsgrnde" metaValue="" />
+      <signavio:signavioDiagramMetaData metaKey="userstory" metaValue="" />
+      <signavio:signavioDiagramMetaData metaKey="processmanager" metaValue="" />
+      <signavio:signavioDiagramMetaData metaKey="revisionid" metaValue="2bd421374c51414c8ec7e702bf377ac7" />
+    </extensionElements>
+    <task id="Activity_16u766l" name="A" />
+  </process>
+  <bpmndi:BPMNDiagram id="sid-345a3974-6b17-406f-9916-e2065ef0f76e">
+    <bpmndi:BPMNPlane id="sid-9090d06a-a238-4367-a15f-aa9d0455c249" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="Activity_16u766l_di" bpmnElement="Activity_16u766l">
+        <omgdc:Bounds x="160" y="80" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+    <bpmndi:BPMNLabelStyle id="sid-1b6de491-3fed-464f-983a-a2ac4d7ec3e7">
+      <omgdc:Font name="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="sid-6615df05-e9c5-47d9-822b-23a45e17e276">
+    <bpmndi:BPMNPlane id="sid-d56e8aec-0d0b-4586-8f11-43a868db822a" bpmnElement="SubProcess_Nested" />
+    <bpmndi:BPMNLabelStyle id="sid-fcb6ce09-e0c1-41f7-accd-ea6bcc4f6b59">
+      <omgdc:Font name="Arial" size="12" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" />
+    </bpmndi:BPMNLabelStyle>
+  </bpmndi:BPMNDiagram>
+</definitions>
