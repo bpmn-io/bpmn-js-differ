@@ -43,7 +43,7 @@
     "rollup-plugin-hypothetical": "^2.1.0"
   },
   "dependencies": {
-    "diffpatch": "^0.5.1",
+    "diffpatch": "^0.6.0",
     "min-dash": "^4.2.1"
   },
   "files": [
