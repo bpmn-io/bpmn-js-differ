@@ -1,4 +1,3 @@
-import hypothetical from 'rollup-plugin-hypothetical';
 import nodeResolve from '@rollup/plugin-node-resolve';
 
 import pkg from './package.json';
@@ -19,17 +18,6 @@ export default [
 function pgl(plugins = []) {
 
   return [
-    hypothetical({
-      allowFallthrough: true,
-      files: {
-        'chalk': `
-          export default null;
-        `,
-        'diff-match-patch': `
-          export default null;
-        `
-      }
-    }),
     nodeResolve(),
     ...plugins
   ];
