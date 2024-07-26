@@ -6,8 +6,8 @@ export default [
   {
     input: 'lib/index.js',
     output: [
-      { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
+      { file: pkg['exports']['.'].node, format: 'cjs' },
+      { file: pkg['exports']['.'].import, format: 'es' }
     ],
     external: [ 'min-dash' ],
     plugins: pgl()

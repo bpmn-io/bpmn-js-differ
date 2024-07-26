@@ -11,9 +11,9 @@ import BpmnModdle from 'bpmn-moddle';
 import {
   Differ,
   diff
-} from '../../';
+} from 'bpmn-js-differ';
 
-import SimpleChangeHandler from '../../lib/change-handler';
+import SimpleChangeHandler from '../../lib/change-handler.js';
 
 
 describe('diffing', function() {
