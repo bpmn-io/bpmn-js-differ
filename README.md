@@ -58,49 +58,24 @@ Get [bpmn-moddle](https://github.com/bpmn-io/bpmn-moddle) via npm:
 npm install --save bpmn-moddle
 ```
 
-Load two diagrams:
+Load a diagram definition:
 
 ```javascript
 import BpmnModdle from 'bpmn-moddle';
 
-function loadModels(a, b) {
+async function loadModel(diagramXML) {
 
-  new BpmnModdle().fromXML(a, function(err, adefs) {
+  const bpmnModdle = new BpmnModdle();
 
-    if (err) {
-      return done(err);
-    }
+  const { rootElement: definitionsA } = await bpmnModdle.fromXML(diagramXML),
 
-    new BpmnModdle().fromXML(b, function(err, bdefs) {
-      if (err) {
-        return done(err);
-      } else {
-        return done(null, adefs, bdefs);
-      }
-    });
-  });
+  return rootElement;
 }
 
+const definitionsA = await loadModel(aXML);
 
-loadModels(aXML, bXML, function(err, aDefinitions, bDefinitions) {
-
-  // go ahead and use the models
-});
-```
-NB: Diagram loading has changed as of version 7.0.0 of bpmn-moddle. The method `fromXML` now returns a promise and no longer uses the callback structure.
-Thus, you can do the following to load a diagram that can then be supplied to `diff` as one of its argument:
-
-```javascript
-import BpmnModdle from 'bpmn-moddle';
-
-async function loadModel(diagramXML){
-    try {
-        var loadedResult = await new BpmnModdle().fromXML(diagramXML);
-        return loadedResult.rootElement;
-    } catch(err){
-        console.log('something went wrong!');
-    }
-}
+// ...
+// go ahead and use the model
 ```
 
 ## Visual Diffing
