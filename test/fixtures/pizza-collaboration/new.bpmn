@@ -71,7 +71,7 @@
     <semantic:intermediateCatchEvent id="_6-219" name="60 minutes">
       <semantic:incoming>_6-424</semantic:incoming>
       <semantic:outgoing>_6-426</semantic:outgoing>
-      <semantic:timerEventDefinition>
+      <semantic:timerEventDefinition id="_6-220">
         <semantic:timeDate xsi:type="semantic:tFormalExpression"/>
       </semantic:timerEventDefinition>
     </semantic:intermediateCatchEvent>
