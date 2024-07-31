@@ -95,6 +95,23 @@ describe('diffing', function() {
 
     });
 
+    it('should discover timer-change', async function() {
+
+      var aDiagram = readFileSync('test/fixtures/timer-change/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/timer-change/after.bpmn', 'utf-8');
+
+      // when
+      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+        // then
+        expect(results._added).to.eql({});
+        expect(results._removed).to.eql({});
+        expect(results._layoutChanged).to.eql({});
+        expect(results._changed).to.have.keys([ 'TimerEventDefinition_0fgktse' ]);
+      });
+
+    });
+
   });
 
 
@@ -292,7 +309,7 @@ describe('diffing', function() {
 
         expect(results._changed).to.have.keys([
           '_6-127',
-          '_6-219'
+          '_6-220'
         ]);
       });
     });

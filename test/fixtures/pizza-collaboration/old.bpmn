@@ -90,7 +90,7 @@
         <semantic:intermediateCatchEvent parallelMultiple="false" name="60 minutes" id="_6-219">
             <semantic:incoming>_6-424</semantic:incoming>
             <semantic:outgoing>_6-426</semantic:outgoing>
-            <semantic:timerEventDefinition>
+            <semantic:timerEventDefinition id="_6-220">
                 <semantic:timeDate/>
             </semantic:timerEventDefinition>
         </semantic:intermediateCatchEvent>
