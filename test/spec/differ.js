@@ -53,6 +53,10 @@ describe('diffing', function() {
           expect(results._removed, 'removed').to.eql({});
           expect(results._layoutChanged, 'layout changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
           expect(results._changed, 'changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
+
+          expect(results._changed['SEQUENCE_FLOW'].attrs).to.deep.eql({
+            targetRef: { oldValue: '#ref:TASK_2', newValue: '#ref:TASK_1' }
+          });
         });
 
       });
