@@ -8,8 +8,15 @@ ___Note:__ Yet to be released changes appear here._
 
 ## 3.0.0
 
+* `FEAT`: diff based on [moddle](https://github.com/bpmn-io/moddle) infrastructure
+* `FEAT`: detect flow source and target changes ([#18](https://github.com/bpmn-io/bpmn-js-differ/issues/18))
 * `CHORE`: turn into ES module
+* `CHORE`: drop UMD distribution
 * `DEPS`: update to `diffpatch@0.6.0`
+
+### Breaking Changes
+
+* Drop UMD distribution; consume as an ES module.
 
 ## 2.0.2
 
