@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js-differ",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "A semantic diffing utility for BPMN 2.0 files",
   "scripts": {
     "all": "run-s lint test",
