@@ -6,6 +6,8 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: detect type change ([#24](https://github.com/bpmn-io/bpmn-js-differ/issues/24))
+
 ## 3.0.0
 
 * `FEAT`: diff based on [moddle](https://github.com/bpmn-io/moddle) infrastructure
