@@ -100,23 +100,49 @@ describe('diffing', function() {
     });
 
 
-    it('should discover change', async function() {
+    describe('should discover change', function() {
 
-      var aDiagram = readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
-      var bDiagram = readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
+      it('property', async function() {
 
-      // when
-      await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+        var aDiagram = readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
 
-        // then
-        expect(results._added).to.eql({});
-        expect(results._removed).to.eql({});
-        expect(results._layoutChanged).to.eql({});
-        expect(results._changed).to.have.keys([ 'Task_1' ]);
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
 
-        expect(results._changed['Task_1'].attrs).to.deep.eql({
-          name: { oldValue: undefined, newValue: 'TASK' }
+          // then
+          expect(results._added).to.eql({});
+          expect(results._removed).to.eql({});
+          expect(results._layoutChanged).to.eql({});
+          expect(results._changed).to.have.keys([ 'Task_1' ]);
+
+          expect(results._changed['Task_1'].attrs).to.deep.eql({
+            name: { oldValue: undefined, newValue: 'TASK' }
+          });
         });
+
+      });
+
+
+      it('$type', async function() {
+
+        var aDiagram = readFileSync('test/fixtures/change/type-change.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/change/type-change.after.bpmn', 'utf-8');
+
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+          // then
+          expect(results._added).to.eql({});
+          expect(results._removed).to.eql({});
+          expect(results._layoutChanged).to.eql({});
+          expect(results._changed).to.have.keys([ 'TASK' ]);
+
+          expect(results._changed['TASK'].attrs).to.deep.eql({
+            $type: { oldValue: 'bpmn:ServiceTask', newValue: 'bpmn:Task' }
+          });
+        });
+
       });
 
     });
