@@ -1,6 +1,6 @@
 {
   "name": "bpmn-js-differ",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "A semantic diffing utility for BPMN 2.0 files",
   "scripts": {
     "all": "run-s lint test",
@@ -14,6 +14,7 @@
       "import": "./dist/index.esm.js",
       "node": "./dist/index.cjs.js"
     }
+    "./dist/index.esm.js": "./dist/index.esm.js"
   },
   "type": "module",
   "repository": {
