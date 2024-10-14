@@ -12,7 +12,7 @@
     "./package.json": "./package.json",
     ".": {
       "import": "./dist/index.esm.js",
-      "node": "./dist/index.cjs.js"
+      "node": "./dist/index.cjs"
     }
   },
   "type": "module",
