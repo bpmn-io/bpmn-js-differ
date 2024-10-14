@@ -8,6 +8,7 @@
     "pretest": "rollup -c --bundleConfigAsCjs",
     "test": "mocha test/spec/*.js"
   },
+  "main": "./dist/index.cjs",
   "exports": {
     "./package.json": "./package.json",
     ".": {
