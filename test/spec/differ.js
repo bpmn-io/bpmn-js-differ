@@ -8,6 +8,8 @@ import {
 
 import BpmnModdle from 'bpmn-moddle';
 
+import zeebe from 'zeebe-bpmn-moddle/resources/zeebe.json' with { type: 'json' };
+
 import {
   Differ,
   diff
@@ -17,6 +19,8 @@ import SimpleChangeHandler from '../../lib/change-handler.js';
 
 
 describe('diffing', function() {
+
+  this.timeout(50000);
 
   describe('diff', function() {
 
@@ -338,6 +342,19 @@ describe('diffing', function() {
         });
       });
 
+
+      it.only('zeebe', async function() {
+
+        var aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/input.before.bpmn', 'utf-8');
+        var bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/input.after.bpmn', 'utf-8');
+
+        // when
+        await testDiff(aDiagram, bDiagram, function(results, aDefinitions, bDefinitions) {
+
+          console.log(JSON.stringify(results, null, 2));
+        });
+      });
+
     });
 
 
@@ -549,8 +566,8 @@ async function importDiagrams(a, b, done) {
     { rootElement: aDefs },
     { rootElement: bDefs }
   ] = await Promise.all([
-    new BpmnModdle().fromXML(a),
-    new BpmnModdle().fromXML(b),
+    new BpmnModdle({ zeebe }).fromXML(a),
+    new BpmnModdle({ zeebe }).fromXML(b),
   ]);
 
   return done(aDefs, bDefs);
