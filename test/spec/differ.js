@@ -310,6 +310,77 @@ describe('diffing', function() {
         expect(results._changed).to.have.keys([ 'Process_1' ]);
       });
 
+
+      it('zeebe', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/input.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/input.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'StartEvent_1' ]);
+
+        const changed = results._changed.StartEvent_1;
+
+        expect(changed.attrs).to.have.keys([
+          'extensionElements.values[0].inputParameters[0]',
+          'extensionElements.values[0].outputParameters[0].target',
+          'extensionElements.values[0].outputParameters[1]'
+        ]);
+
+        const removedInput = changed.attrs['extensionElements.values[0].inputParameters[0]'];
+
+        expect(removedInput.oldValue.$type).to.equal('zeebe:Input');
+        expect(removedInput.oldValue.source).to.equal('inputSourceRemoved');
+        expect(removedInput.oldValue.target).to.equal('=inputTargetRemoved');
+        expect(removedInput.newValue).to.be.null;
+        expect(removedInput.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'inputParameters',
+          0
+        ]);
+        expect(removedInput.index).to.equal(0);
+
+        const changedOutput = changed.attrs['extensionElements.values[0].outputParameters[0].target'];
+
+        expect(changedOutput.oldValue).to.equal('outputTargetBefore');
+        expect(changedOutput.newValue).to.equal('outputTargetAfter');
+        expect(changedOutput.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'outputParameters',
+          0,
+          'target'
+        ]);
+
+        const addedOutput = changed.attrs['extensionElements.values[0].outputParameters[1]'];
+
+        expect(addedOutput.oldValue).to.be.null;
+        expect(addedOutput.newValue.$type).to.equal('zeebe:Output');
+        expect(addedOutput.newValue.source).to.equal('=outputSourceAdded');
+        expect(addedOutput.newValue.target).to.equal('outputTargetAdded');
+        expect(addedOutput.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'outputParameters',
+          1
+        ]);
+        expect(addedOutput.index).to.equal(1);
+      });
+
     });
 
 
@@ -594,9 +665,9 @@ describe('diffing', function() {
       const changed = new Differ().diff(aDefinitions, bDefinitions, changeHandler);
 
       // then
-      expect(changed._added).to.have.keys('_0', '_1');
-      expect(changed._removed).to.have.keys('_2', '_3');
-      expect(changed._changed).to.have.keys('SERVICE_TASK');
+      expect(changed._added).to.have.keys('_1');
+      expect(changed._removed).to.have.keys('_2');
+      expect(changed._changed).to.have.keys('_0');
       expect(changed._layoutChanged).to.eql({});
     });
 
@@ -624,13 +695,13 @@ async function importDiagrams(a, b, options = {}) {
 }
 
 
-async function diagramDiff(a, b) {
+async function diagramDiff(a, b, options = {}) {
 
   // given
   const {
     aDefinitions,
     bDefinitions
-  } = await importDiagrams(a, b);
+  } = await importDiagrams(a, b, options);
 
   const handler = new ChangeHandler();
 
