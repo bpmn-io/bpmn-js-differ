@@ -10,10 +10,10 @@ import BpmnModdle from 'bpmn-moddle';
 
 import {
   Differ,
-  diff
+  diff,
+  ChangeHandler
 } from 'bpmn-js-differ';
-
-import SimpleChangeHandler from '../../lib/change-handler.js';
+import { is } from '../../lib/util.js';
 
 
 describe('diffing', function() {
@@ -538,6 +538,50 @@ describe('diffing', function() {
 
   });
 
+
+  describe('extension', function() {
+
+    it('should customize ChangeHandler to track nested properties', async function() {
+
+      var aDiagram = readFileSync('test/fixtures/custom/data-object/before.bpmn', 'utf-8');
+      var bDiagram = readFileSync('test/fixtures/custom/data-object/after.bpmn', 'utf-8');
+
+      // given
+      class CustomChangeHandler extends ChangeHandler {
+
+        _isTracked(element) {
+
+          // track bpmn:DataObject elements (base implementation ignores)
+          if (is(element, 'bpmn:DataObject')) {
+            return {
+              element: element,
+              property: ''
+            };
+          }
+
+          return super._isTracked(element);
+        }
+      }
+
+      await importDiagrams(aDiagram, bDiagram, function(aDefinitions, bDefinitions) {
+
+        // given
+        var changeHandler = new CustomChangeHandler();
+
+        // when
+        new Differ().diff(aDefinitions, bDefinitions, changeHandler);
+
+        // then
+        expect(changeHandler._added).to.have.keys('DATA_OBJECT_3');
+        expect(changeHandler._removed).to.have.keys('DATA_OBJECT_2');
+        expect(changeHandler._changed).to.have.keys('DATA_OBJECT_1', 'DATA_OBJECT_REFERENCE_2');
+        expect(changeHandler._layoutChanged).to.eql({});
+      });
+
+    });
+
+  });
+
 });
 
 
@@ -562,7 +606,7 @@ function testDiff(a, b, done) {
   return importDiagrams(a, b, function(adefs, bdefs) {
 
     // given
-    var handler = new SimpleChangeHandler();
+    var handler = new ChangeHandler();
 
     // when
     new Differ().diff(adefs, bdefs, handler);
