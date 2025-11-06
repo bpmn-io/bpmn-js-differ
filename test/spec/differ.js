@@ -14,6 +14,8 @@ import {
   ChangeHandler
 } from 'bpmn-js-differ';
 
+import ZeebeModdlePackage from 'zeebe-bpmn-moddle/resources/zeebe.json' with { type: 'json' };
+
 import { is } from '../../lib/util.js';
 
 
@@ -535,6 +537,69 @@ describe('diffing', function() {
       expect(changed._layoutChanged).to.eql({});
     });
 
+
+    it('should customize ChangeHandler to track <camunda> changes', async function() {
+
+      const aDiagram = readFileSync('test/fixtures/custom/camunda/before.bpmn', 'utf-8');
+      const bDiagram = readFileSync('test/fixtures/custom/camunda/after.bpmn', 'utf-8');
+
+      // given
+      class CustomChangeHandler extends ChangeHandler {
+
+        constructor() {
+          super();
+
+          this._id = 0;
+          this._ids = new Map();
+        }
+
+        _computeChangeId(element) {
+
+          const existingId = this._ids.get(element);
+
+          if (existingId) {
+            return existingId;
+          }
+
+          const newId = super._computeChangeId(element) || '_' + (this._id++);
+
+          this._ids.set(element, newId);
+
+          return newId;
+        }
+
+        _isTracked(element) {
+
+          if (is(element, 'Element')) {
+            return {
+              element: element,
+              property: ''
+            };
+          }
+
+          return super._isTracked(element);
+        }
+      }
+
+      const { aDefinitions, bDefinitions } = await importDiagrams(aDiagram, bDiagram, {
+        moddleExtensions: {
+          zeebe: ZeebeModdlePackage
+        }
+      });
+
+      // given
+      const changeHandler = new CustomChangeHandler();
+
+      // when
+      const changed = new Differ().diff(aDefinitions, bDefinitions, changeHandler);
+
+      // then
+      expect(changed._added).to.have.keys('_0', '_1');
+      expect(changed._removed).to.have.keys('_2', '_3');
+      expect(changed._changed).to.have.keys('SERVICE_TASK');
+      expect(changed._layoutChanged).to.eql({});
+    });
+
   });
 
 });
@@ -548,8 +613,8 @@ async function importDiagrams(a, b, options = {}) {
     { rootElement: aDefinitions },
     { rootElement: bDefinitions }
   ] = await Promise.all([
-    new BpmnModdle().fromXML(a),
-    new BpmnModdle().fromXML(b),
+    new BpmnModdle(options.moddleExtensions).fromXML(a),
+    new BpmnModdle(options.moddleExtensions).fromXML(b)
   ]);
 
   return {
