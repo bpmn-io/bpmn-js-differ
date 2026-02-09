@@ -37,8 +37,6 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "@babel/eslint-parser": "^7.28.5",
-    "@babel/plugin-syntax-import-attributes": "^7.27.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "bpmn-moddle": "^9.0.1",
     "chai": "^6.2.2",
