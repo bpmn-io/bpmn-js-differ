@@ -6,7 +6,7 @@ import {
   readFileSync
 } from 'fs';
 
-import BpmnModdle from 'bpmn-moddle';
+import { BpmnModdle } from 'bpmn-moddle';
 
 import {
   Differ,

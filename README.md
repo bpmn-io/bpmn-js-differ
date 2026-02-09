@@ -61,7 +61,7 @@ npm install --save bpmn-moddle
 Load a diagram definition:
 
 ```javascript
-import BpmnModdle from 'bpmn-moddle';
+import { BpmnModdle } from 'bpmn-moddle';
 
 async function loadModel(diagramXML) {
 
