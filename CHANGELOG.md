@@ -6,6 +6,10 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+## 3.2.0
+
+* `DEPS`: update to `min-dash@5.0.0`
+
 ## 3.1.0
 
 * `FEAT`: allow to customize change handler and element tracking ([#29](https://github.com/bpmn-io/bpmn-js-differ/issues/29))
