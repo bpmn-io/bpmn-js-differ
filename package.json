@@ -38,7 +38,7 @@
   "license": "MIT",
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
-    "bpmn-moddle": "^9.0.1",
+    "bpmn-moddle": "^10.0.0",
     "chai": "^6.2.2",
     "eslint": "^9.39.2",
     "eslint-plugin-bpmn-io": "^2.2.0",
