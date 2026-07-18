@@ -381,6 +381,385 @@ describe('diffing', function() {
         expect(addedOutput.index).to.equal(1);
       });
 
+      it('zeebe extended elements', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/all.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/all.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([
+          'BusinessRuleTask_1',
+          'CallActivity_1',
+          'Process_1',
+          'ScriptTask_1',
+          'ServiceTask_1',
+          'UserTask_1'
+        ]);
+
+        expect(results._changed.Process_1.attrs['extensionElements.values[0].value'])
+          .to.include({ oldValue: 'before', newValue: 'after' });
+
+        expect(results._changed.ServiceTask_1.attrs)
+          .to.include.keys([
+            'extensionElements.values[0].retries',
+            'extensionElements.values[1].values[0].value',
+            'extensionElements.values[1].values[1]',
+            'extensionElements.values[2].properties[0].value',
+            'extensionElements.values[2].properties[1]',
+            'extensionElements.values[3].values[0].resourceType',
+            'extensionElements.values[4].listeners[0].retries'
+          ]);
+
+        expect(results._changed.ServiceTask_1.attrs['extensionElements.values[1].values[1]'])
+          .to.include({ oldValue: null, index: 1 });
+
+        expect(results._changed.ServiceTask_1.attrs['extensionElements.values[2].properties[1]'])
+          .to.include({ newValue: null, index: 1 });
+
+        expect(results._changed.UserTask_1.attrs)
+          .to.include.keys([
+            'extensionElements.values[0].formId',
+            'extensionElements.values[1].assignee',
+            'extensionElements.values[2].priority',
+            'extensionElements.values[3].dueDate',
+            'extensionElements.values[4].listeners[0].retries'
+          ]);
+
+        expect(results._changed.CallActivity_1.attrs['extensionElements.values[0].processId'])
+          .to.include({ oldValue: 'before', newValue: 'after' });
+
+        expect(results._changed.BusinessRuleTask_1.attrs['extensionElements.values[0].decisionId'])
+          .to.include({ oldValue: 'before', newValue: 'after' });
+
+        expect(results._changed.ScriptTask_1.attrs['extensionElements.values[0].expression'])
+          .to.include({ oldValue: '=before', newValue: '=after' });
+      });
+
+      it('zeebe subscription', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/correlation-key.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/correlation-key.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Message_0qcsm4t' ]);
+
+        const change = results._changed.Message_0qcsm4t.attrs['extensionElements.values[0].correlationKey'];
+
+        expect(change).to.include({
+          oldValue: '=foo',
+          newValue: '=bar'
+        });
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'correlationKey'
+        ]);
+      });
+
+      it('zeebe loop characteristics', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/loop-characteristics.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/loop-characteristics.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_108zyfb' ]);
+
+        const change = results._changed.Activity_108zyfb.attrs['loopCharacteristics.extensionElements.values[0].inputCollection'];
+
+        expect(change).to.include({
+          oldValue: '=foo',
+          newValue: '=bar'
+        });
+        expect(change.path).to.eql([
+          'loopCharacteristics',
+          'extensionElements',
+          'values',
+          0,
+          'inputCollection'
+        ]);
+      });
+
+      it('zeebe ad-hoc subprocess', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/ad-hoc.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/ad-hoc.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_1svuewu' ]);
+
+        const change = results._changed.Activity_1svuewu.attrs['extensionElements.values[0].activeElementsCollection'];
+
+        expect(change).to.include({
+          oldValue: '=foo',
+          newValue: '=bar'
+        });
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'activeElementsCollection'
+        ]);
+      });
+
+      it('zeebe form definition', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/user-task-form.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/user-task-form.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_0i4tnol' ]);
+
+        const change = results._changed.Activity_0i4tnol.attrs['extensionElements.values[1].formId'];
+
+        expect(change).to.include({
+          oldValue: 'foo',
+          newValue: 'bar'
+        });
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          1,
+          'formId'
+        ]);
+      });
+
+      it('zeebe user task marker', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/user-task-marker.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/user-task-marker.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_0i4tnol' ]);
+
+        const change = results._changed.Activity_0i4tnol.attrs['extensionElements.values[0]'];
+
+        expect(change.oldValue).to.be.null;
+        expect(change.newValue.$type).to.equal('zeebe:UserTask');
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          0
+        ]);
+        expect(change.index).to.equal(0);
+      });
+
+      it('zeebe binding', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/binding.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/binding.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_03xofrd' ]);
+
+        const change = results._changed.Activity_03xofrd.attrs['extensionElements.values[0].bindingType'];
+
+        expect(change).to.include({
+          oldValue: 'latest',
+          newValue: 'deployment'
+        });
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          0,
+          'bindingType'
+        ]);
+      });
+
+      it('zeebe external form reference', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/form-definition.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/form-definition.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._added).to.be.empty;
+        expect(results._removed).to.be.empty;
+        expect(results._layoutChanged).to.be.empty;
+        expect(results._changed).to.have.keys([ 'Activity_0x1sz6k' ]);
+
+        const change = results._changed.Activity_0x1sz6k.attrs['extensionElements.values[1].externalReference'];
+
+        expect(change).to.include({
+          oldValue: 'foo',
+          newValue: 'bar'
+        });
+        expect(change.path).to.eql([
+          'extensionElements',
+          'values',
+          1,
+          'externalReference'
+        ]);
+      });
+
+      it('zeebe assignment candidates', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/assignment.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/assignment.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._changed).to.have.keys([ 'Activity_0ukwzc4' ]);
+
+        const change = results._changed.Activity_0ukwzc4.attrs['extensionElements.values[1].candidateUsers'];
+
+        expect(change).to.include({
+          oldValue: 'foo',
+          newValue: 'bar'
+        });
+      });
+
+      it('zeebe task schedule', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/task-schedule.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/task-schedule.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._changed).to.have.keys([ 'Activity_1qelq3b' ]);
+
+        const change = results._changed.Activity_1qelq3b.attrs['extensionElements.values[1].followUpDate'];
+
+        expect(change).to.include({
+          oldValue: 'foo',
+          newValue: 'bar'
+        });
+      });
+
+      it('zeebe script result variable', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/script.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/script.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        expect(results._changed).to.have.keys([ 'Activity_1vwpbii' ]);
+
+        const change = results._changed.Activity_1vwpbii.attrs['extensionElements.values[0].resultVariable'];
+
+        expect(change).to.include({
+          oldValue: 'foo',
+          newValue: 'bar'
+        });
+      });
+
+      it('zeebe header key replacement', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/extension-elements/zeebe/header-key.before.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/extension-elements/zeebe/header-key.after.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram, {
+          moddleExtensions: {
+            zeebe: ZeebeModdlePackage
+          }
+        });
+
+        // then
+        const changed = results._changed.Activity_00t6nmb;
+
+        expect(changed.attrs['extensionElements.values[0].values[0]'])
+          .to.include({ newValue: null });
+
+        expect(changed.changes).to.have.length(2);
+        expect(changed.changes[0].newValue.key).to.equal('bar');
+        expect(changed.changes[1].oldValue.key).to.equal('foo');
+      });
+
     });
 
 
@@ -665,9 +1044,9 @@ describe('diffing', function() {
       const changed = new Differ().diff(aDefinitions, bDefinitions, changeHandler);
 
       // then
-      expect(changed._added).to.have.keys('_1');
-      expect(changed._removed).to.have.keys('_2');
-      expect(changed._changed).to.have.keys('_0');
+      expect(changed._added).to.eql({});
+      expect(changed._removed).to.eql({});
+      expect(changed._changed).to.have.keys('_0', '_1');
       expect(changed._layoutChanged).to.eql({});
     });
 

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_12mmk4l" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.49.0" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.9.0">
+  <bpmn:process id="Process_1wjkdtj" isExecutable="true">
+    <bpmn:adHocSubProcess id="Activity_1svuewu">
+      <bpmn:extensionElements>
+        <zeebe:adHoc activeElementsCollection="=foo" />
+      </bpmn:extensionElements>
+    </bpmn:adHocSubProcess>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1wjkdtj">
+      <bpmndi:BPMNShape id="Activity_1svuewu_di" bpmnElement="Activity_1svuewu">
+        <dc:Bounds x="160" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_08m1cfc">
+    <bpmndi:BPMNPlane id="BPMNPlane_0fyrstk" bpmnElement="Activity_1svuewu" />
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

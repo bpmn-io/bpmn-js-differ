@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:versionTag value="after" />
+    </bpmn:extensionElements>
+    <bpmn:serviceTask id="ServiceTask_1">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="worker" retries="5" />
+        <zeebe:taskHeaders>
+          <zeebe:header key="tenant" value="after" />
+          <zeebe:header key="added" value="after" />
+        </zeebe:taskHeaders>
+        <zeebe:properties>
+          <zeebe:property name="region" value="after" />
+        </zeebe:properties>
+        <zeebe:linkedResources>
+          <zeebe:linkedResource resourceId="document" resourceType="file" linkName="invoice" />
+        </zeebe:linkedResources>
+        <zeebe:executionListeners>
+          <zeebe:executionListener eventType="start" type="listener" retries="5" />
+        </zeebe:executionListeners>
+      </bpmn:extensionElements>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="UserTask_1">
+      <bpmn:extensionElements>
+        <zeebe:formDefinition formId="after" />
+        <zeebe:assignmentDefinition assignee="after" />
+        <zeebe:priorityDefinition priority="5" />
+        <zeebe:taskSchedule dueDate="2026-02-01" />
+        <zeebe:taskListeners>
+          <zeebe:taskListener eventType="assigning" type="listener" retries="5" />
+        </zeebe:taskListeners>
+      </bpmn:extensionElements>
+    </bpmn:userTask>
+    <bpmn:callActivity id="CallActivity_1">
+      <bpmn:extensionElements>
+        <zeebe:calledElement processId="after" />
+      </bpmn:extensionElements>
+    </bpmn:callActivity>
+    <bpmn:businessRuleTask id="BusinessRuleTask_1">
+      <bpmn:extensionElements>
+        <zeebe:calledDecision decisionId="after" />
+      </bpmn:extensionElements>
+    </bpmn:businessRuleTask>
+    <bpmn:scriptTask id="ScriptTask_1">
+      <bpmn:extensionElements>
+        <zeebe:script expression="=after" />
+      </bpmn:extensionElements>
+    </bpmn:scriptTask>
+  </bpmn:process>
+</bpmn:definitions>
