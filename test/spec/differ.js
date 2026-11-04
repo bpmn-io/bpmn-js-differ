@@ -56,7 +56,7 @@ describe('diffing', function() {
         expect(results._changed, 'changed').to.have.keys([ 'SEQUENCE_FLOW', 'MESSAGE_FLOW' ]);
 
         expect(results._changed['SEQUENCE_FLOW'].attrs).to.deep.eql({
-          targetRef: { oldValue: '#ref:TASK_2', newValue: '#ref:TASK_1' }
+          targetRef: { oldValue: '#ref:TASK_1', newValue: '#ref:TASK_2' }
         });
       });
 
@@ -117,6 +117,26 @@ describe('diffing', function() {
       });
 
 
+      it('property (removed)', async function() {
+
+        const aDiagram = readFileSync('test/fixtures/change/after.bpmn', 'utf-8');
+        const bDiagram = readFileSync('test/fixtures/change/before.bpmn', 'utf-8');
+
+        // when
+        const { results } = await diagramDiff(aDiagram, bDiagram);
+
+        // then
+        expect(results._added).to.eql({});
+        expect(results._removed).to.eql({});
+        expect(results._layoutChanged).to.eql({});
+        expect(results._changed).to.have.keys([ 'Task_1' ]);
+
+        expect(results._changed['Task_1'].attrs).to.deep.eql({
+          name: { oldValue: 'TASK', newValue: undefined }
+        });
+      });
+
+
       it('$type', async function() {
 
         const aDiagram = readFileSync('test/fixtures/change/type-change.before.bpmn', 'utf-8');
@@ -132,7 +152,7 @@ describe('diffing', function() {
         expect(results._changed).to.have.keys([ 'TASK' ]);
 
         expect(results._changed['TASK'].attrs).to.deep.eql({
-          $type: { oldValue: 'bpmn:ServiceTask', newValue: 'bpmn:Task' }
+          $type: { oldValue: 'bpmn:Task', newValue: 'bpmn:ServiceTask' }
         });
       });
 

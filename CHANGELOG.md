@@ -6,6 +6,12 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+* `FIX`: report correct `oldValue` and `newValue` for changed and removed properties ([#32](https://github.com/bpmn-io/bpmn-js-differ/issues/32))
+
+### Breaking Changes
+
+* Changed properties now report `oldValue` and `newValue` the right way round; previously they were swapped. Removed properties now report the removed value as `oldValue` and `undefined` as `newValue`. Consumers that worked around the swapped values must drop their workaround.
+
 ## 3.2.0
 
 * `DEPS`: update to `min-dash@5.0.0`
