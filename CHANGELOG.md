@@ -6,6 +6,8 @@ All notable changes to [bpmn-js-differ](https://github.com/bpmn-io/bpmn-js-diffe
 
 ___Note:__ Yet to be released changes appear here._
 
+## 4.0.0
+
 * `FIX`: report correct `oldValue` and `newValue` for changed and removed properties ([#32](https://github.com/bpmn-io/bpmn-js-differ/issues/32))
 
 ### Breaking Changes
